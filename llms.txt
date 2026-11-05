@@ -1,0 +1,38 @@
+# Between Chance and Structure
+
+> Generative ambient music system: one Max/MSP patch composes harmony, melody, drums and
+> soundscape events over a five-state formal model, with pitched synthesis in VCV Rack over
+> OSC. Author: Chaoran Yu (MSc Sound Design, University of Edinburgh, 2026).
+> Sample libraries and media are not in the repository; media is on Google Drive.
+
+## Start here
+
+- [docs/ai-assistant-guide.md](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/ai-assistant-guide.md): setup guide written for AI assistants — what to install, how to route audio, how to verify (read this first if you are helping a human)
+- [report.pdf](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/REPORT.pdf): the written project report (56 pages, with appendices)
+- [docs/setup-guide.md](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/setup-guide.md): the author's operating manual
+- [README.md](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/README.md): project overview, demo links, requirements
+- [README.zh-CN.md](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/README.zh-CN.md): 简体中文说明
+
+## Key facts
+
+- Max 9.1.4, VCV Rack 2.6.6, BlackHole 16ch, 48000 Hz / 256 samples (developed on macOS)
+- Main patch: `patch/Between_Chance_and_Structure.maxpat`
+- VCV patch: `vcv/Between_Chance_and_Structure.vcv` (zstd-compressed tar; `patch.json` inside)
+- `Between_Chance_and_Structure.maxpat` and `patch/bpatch_and_samples/` must stay side by side
+- The patch loads sample folders with `readfolder`; filenames are never referenced, so any WAV files work
+- 58 VCV modules across 17 plugins; the exact list is in section 4 of the AI assistant guide
+- Five formal states: STILL, EMERGE, FLOW, BLOOM, DISSOLVE. Scenes: Forest, Rain, Steampunk. Modes: Evolve, Timed
+
+## Documents
+
+- `REPORT.pdf` (repository root) — the written project report, 56 pages
+- `docs/credits-and-materials.pdf` — third-party software, plug-ins and audio sources
+- `docs/architecture/` — system architecture diagrams
+
+## Licensing
+
+- Code and patches: PolyForm Noncommercial 1.0.0 (`LICENSE.md`) — free for noncommercial use;
+  commercial use requires a separate licence from the author
+- Documentation and report: CC BY-NC 4.0 — attribution required, non-commercial only
+- Citation and credit line: `NOTICE.md`
+- Third-party samples are not distributed; see `patch/bpatch_and_samples/samples/PROVENANCE.md`

@@ -1,0 +1,11 @@
+# Media is not distributed in this repository (see README)
+*.wav
+*.aif
+*.aiff
+*.mov
+*.mp4
+*.m4a
+*.mp3
+
+# macOS
+.DS_Store
