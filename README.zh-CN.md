@@ -1,19 +1,17 @@
 [English](README.md) · **简体中文**
 
-# Between Chance and Structure
+[![Between Chance and Structure：模块化乐器风格封面](docs/visuals/cover.png)](https://drive.google.com/file/d/17yuBqAit3PdmheTKZqrVmPnGPdnH5vLY/view?usp=sharing)
 
 **为氛围音乐设计的生成系统**
 
-俞超然（Chaoran Yu）· 爱丁堡大学 声音设计硕士（MSc Sound Design）· 2026 年 8 月
+一套用概率、段落记忆与五状态形式模型，组织长篇氛围音乐和 Lo-fi 材料的生成式系统。
 
-一套用于生成长篇氛围音乐与 Lo-fi 材料的生成式音乐系统，并让整体曲式保持可辨识的结构。
-一个 Max/MSP 主 patch 负责和声、旋律、鼓组与环境声事件，通过 OSC 向 VCV Rack 发送控制数据；
-带音高的合成在 VCV Rack 中完成，立体声音频经 BlackHole 返回 Max。
+[**观看演示 ↗**](https://drive.google.com/file/d/17yuBqAit3PdmheTKZqrVmPnGPdnH5vLY/view?usp=sharing) · [**试听 ↗**](https://drive.google.com/file/d/1ApeeHdoXmLhVu1l2J4Wy0cETJyLGmT0u/view?usp=sharing) · [**阅读报告**](REPORT.pdf) · [**运行指南**](#运行)
 
-本项目要回答的问题是：**概率能在多大程度上改变局部的音乐事件，而整体曲式仍不失可读性。**
-连续性来自手工编写的规则表、加权选择与段记忆；变化则来自编排层与形式状态的推进。
+俞超然（Chaoran Yu）· 爱丁堡大学声音设计硕士 · 2026 年 8 月
 
-## 演示
+<details>
+<summary>全部演示、技术讲解与录音</summary>
 
 长视频与音频示例托管在 Google Drive，不存放在仓库中。
 
@@ -28,77 +26,18 @@
 
 以上链接均设置为「知道链接的人均可查看」。
 
+</details>
+
 ## 我实现的内容
 
 - 五状态形式控制器、Evolve／Timed 模式、段落记忆与声部编排规则。
 - 手工编写的和声转移表、加权选择与最小移动声部进行代价函数。
 - 旋律和鼓组的乐句记忆、条件 IDM 打击乐、场景环境声，以及与 VCV Rack 的 OSC 集成。
 
-## 系统架构
-
-![系统总架构](docs/architecture/overall-architecture.png)
-
-OSC 将控制数据从 Max 送往 VCV Rack；BlackHole 将立体声音频返回 Max。
-
-## 运行
-
-1. 安装 **Max 9.1.4** 与 **VCV Rack 2.6.6**，以及[环境要求](#环境要求)中列出的 VCV 插件。
-2. 按[样本替换指南](patch/bpatch_and_samples/samples/README.md)补充 WAV。样本目录初始为空；
-   环境声床和 IDM 需要遵循固定的 buffer 分组。
-3. 打开 `vcv/Between_Chance_and_Structure.vcv`，把 Audio Interface 设为 **BlackHole 16ch**、
-   48 kHz、256 采样块。
-4. 打开 `patch/Between_Chance_and_Structure.maxpat`，Max 输入设为 **BlackHole 16ch**，
-   输出设为你的实体设备。
-5. 启用 Max 音频，选择场景与模式，按 **START**。
-
-不要把 Max 的输出再送回 BlackHole——那会造成反馈或静音。完整的操作手册、界面说明与录音流程见
-[`docs/setup-guide.md`](docs/setup-guide.md)。新环境可按[人工验收清单](docs/verification.md)逐项检查。
-
-## 仓库结构
-
-```
-README.md                     本页
-README.zh-CN.md               简体中文版
-REPORT.pdf                    项目报告全文（55 页，含附录）
-NOTICE.md                     版权与使用条款
-llms.txt                      给 AI 工具用的机器可读索引
-docs/
-    environment.md            作者环境与保存的插件版本
-    verification.md           静态检查、作者确认与可选检查
-    release-notes.md          v1.0 候选版发布说明
-    setup-guide.md            操作手册：音频路由、界面、录音
-    credits-and-materials.pdf 第三方软件、插件与音频素材来源
-    architecture/             系统架构图
-    ai-assistant-guide.md     写给 AI 助手的安装说明
-patch/
-    Between_Chance_and_Structure.maxpat   Max 主 patch
-    bpatch_and_samples/                   Max 抽象与样本目录
-        AmbientEventVoice.maxpat
-        IDMPercVoice.maxpat
-        drumRack.maxpat / drumRack_64.maxpat
-        globalClock.maxpat
-        samples/
-            README.md         原样本内容清单（按目录）
-            PROVENANCE.md     已知来源、Sound ID 与追溯缺口
-            IDM_samples/  drums/{kick,snare,hat,ohat,cymbals}/  sceneAmbient/  sceneEvents/
-vcv/
-    Between_Chance_and_Structure.vcv      VCV Rack 合成 patch
-```
-
-Max patch 以自身位置为基准解析 `bpatch_and_samples/`，因此
-`Between_Chance_and_Structure.maxpat` 与这个目录必须保持同级。
-
-## 未包含的内容
-
-- **样本库** —— 原始音频来自商业采样包与实地录音，无法在此重新分发。目录随仓库空置，patch
-  可以打开，但采样声部需要自行补充音频。请按[样本替换指南](patch/bpatch_and_samples/samples/README.md)
-  准备素材：环境声床须按场景分为三组各五个，IDM 须按五类音色填满 1–57 号 buffer，并检查加载顺序。
-  该指南保留原始文件清单；`samples/PROVENANCE.md` 记录已知来源、Sound ID 与追溯缺口。
-  这些库授权的是**在作品中使用**（含商业发行），
-  而不是**再分发原始文件**。
-- **视频与音频示例** —— 见上方 Google Drive 链接。
-
 ## 工作原理
+
+本项目要回答的问题是：**概率能在多大程度上改变局部的音乐事件，而整体曲式仍不失可读性。**
+连续性来自手工编写的规则表、加权选择与段落记忆；变化来自编排层与形式状态的推进。
 
 **五个形式状态**通过每个段落边界的「离开概率」检验依次推进：
 
@@ -113,6 +52,32 @@ Steampunk（蒸汽朋克）。
 和声使用手工编写的一阶马尔可夫链、加权 `coll` 池与声部进行代价函数；旋律、鼓组与环境事件由
 各自的子 patch 驱动。完整架构见报告 4.3–4.5 节，图示见
 [`docs/architecture/`](docs/architecture/)。
+
+## 系统架构
+
+<details>
+<summary>展开总架构与音频路由</summary>
+
+![系统总架构](docs/architecture/overall-architecture.png)
+
+Max/MSP 负责和声、旋律、鼓组与环境声事件，通过 OSC 将控制数据送往 VCV Rack；
+带音高的合成在 VCV Rack 中完成，立体声音频经 BlackHole 返回 Max。
+
+</details>
+
+## 运行
+
+1. 安装 **Max 9.1.4** 与 **VCV Rack 2.6.6**，以及[环境要求](#环境要求)中列出的 VCV 插件。
+2. 按[样本替换指南](patch/bpatch_and_samples/samples/README.md)补充 WAV。样本目录初始为空；
+   环境声床和 IDM 需要遵循固定的 buffer 分组。
+3. 打开 `vcv/Between_Chance_and_Structure.vcv`，把 Audio Interface 设为 **BlackHole 16ch**、
+   48 kHz、256 采样块。
+4. 打开 `patch/Between_Chance_and_Structure.maxpat`，Max 输入设为 **BlackHole 16ch**，
+   输出设为你的实体设备。
+5. 启用 Max 音频，选择场景与模式，按 **START**。
+
+不要把 Max 的输出再送回 BlackHole——那会造成反馈或静音。完整的操作手册、界面说明与录音流程见
+[`docs/setup-guide.md`](docs/setup-guide.md)。新环境可按[人工验收清单](docs/verification.md)逐项检查。
 
 ## 环境要求
 
@@ -136,6 +101,56 @@ Apple M5 Pro、64 GB 内存。详见[环境与 patch 保存的插件版本](docs
 报告是主要的文字成果：动机与相关实践、手工编写的规则系统、五状态形式模型、
 Max/MSP 与 VCV Rack 的实现、试听与反思，以及三个附录（AI 使用声明、第三方素材、
 概率与映射表）。
+
+## 仓库结构
+
+<details>
+<summary>展开目录树</summary>
+
+```
+README.md                     本页
+README.zh-CN.md               简体中文版
+REPORT.pdf                    项目报告全文（55 页，含附录）
+NOTICE.md                     版权与使用条款
+llms.txt                      给 AI 工具用的机器可读索引
+docs/
+    environment.md            作者环境与保存的插件版本
+    verification.md           静态检查、作者确认与可选检查
+    release-notes.md          v1.0 候选版发布说明
+    setup-guide.md            操作手册：音频路由、界面、录音
+    credits-and-materials.pdf 第三方软件、插件与音频素材来源
+    visuals/                  首页封面与可编辑 SVG
+    architecture/             系统架构图
+    ai-assistant-guide.md     写给 AI 助手的安装说明
+patch/
+    Between_Chance_and_Structure.maxpat   Max 主 patch
+    bpatch_and_samples/                   Max 抽象与样本目录
+        AmbientEventVoice.maxpat
+        IDMPercVoice.maxpat
+        drumRack.maxpat / drumRack_64.maxpat
+        globalClock.maxpat
+        samples/
+            README.md         原样本内容清单（按目录）
+            PROVENANCE.md     已知来源、Sound ID 与追溯缺口
+            IDM_samples/  drums/{kick,snare,hat,ohat,cymbals}/  sceneAmbient/  sceneEvents/
+vcv/
+    Between_Chance_and_Structure.vcv      VCV Rack 合成 patch
+```
+
+Max patch 以自身位置为基准解析 `bpatch_and_samples/`，因此
+`Between_Chance_and_Structure.maxpat` 与这个目录必须保持同级。
+
+</details>
+
+## 未包含的内容
+
+- **样本库** —— 原始音频来自商业采样包与实地录音，无法在此重新分发。目录随仓库空置，patch
+  可以打开，但采样声部需要自行补充音频。请按[样本替换指南](patch/bpatch_and_samples/samples/README.md)
+  准备素材：环境声床须按场景分为三组各五个，IDM 须按五类音色填满 1–57 号 buffer，并检查加载顺序。
+  该指南保留原始文件清单；`samples/PROVENANCE.md` 记录已知来源、Sound ID 与追溯缺口。
+  这些库授权的是**在作品中使用**（含商业发行），
+  而不是**再分发原始文件**。
+- **视频与音频示例** —— 见上方 Google Drive 链接。
 
 ## 交给 AI 助手来装
 

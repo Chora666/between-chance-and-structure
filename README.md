@@ -1,21 +1,18 @@
 **English** · [简体中文](README.zh-CN.md)
 
-# Between Chance and Structure
+[![Between Chance and Structure — modular instrument cover](docs/visuals/cover.png)](https://drive.google.com/file/d/17yuBqAit3PdmheTKZqrVmPnGPdnH5vLY/view?usp=sharing)
 
 **Designing a Generative System for Ambient Music**
 
+A generative ambient and lo-fi music system shaped by probability, section memory and a
+five-state formal model.
+
+[**Watch the demo ↗**](https://drive.google.com/file/d/17yuBqAit3PdmheTKZqrVmPnGPdnH5vLY/view?usp=sharing) · [**Listen ↗**](https://drive.google.com/file/d/1ApeeHdoXmLhVu1l2J4Wy0cETJyLGmT0u/view?usp=sharing) · [**Read the report**](REPORT.pdf) · [**Run it**](#run-it)
+
 Chaoran Yu · MSc Sound Design, University of Edinburgh · August 2026
 
-A generative music system for long-form ambient and lo-fi material that keeps a readable
-formal shape. One Max/MSP patch composes harmony, melody, drums and soundscape events;
-Max sends OSC control data to VCV Rack for pitched synthesis; the stereo audio returns
-to Max through BlackHole.
-
-The project asks how far probability can vary local musical events before the larger form
-becomes difficult to follow. Continuity comes from authored rule tables, weighted choices and
-section memory; change comes from orchestration and the passing of formal states.
-
-## Demonstration
+<details>
+<summary>All demonstrations, technical walkthroughs and recordings</summary>
 
 Long videos and audio examples are hosted on Google Drive rather than stored here.
 
@@ -30,17 +27,46 @@ Long videos and audio examples are hosted on Google Drive rather than stored her
 
 All links are set to *anyone with the link can view*.
 
+</details>
+
 ## What I built
 
 - A five-state formal controller with Evolve and Timed modes, section memory and orchestration rules.
 - Hand-authored harmonic transition tables, weighted choices and a minimum-movement voice-leading cost function.
 - Melody and drum phrase memory, conditional IDM percussion, scene-based soundscapes, and OSC integration with VCV Rack.
 
+## How it works
+
+The project asks how far probability can vary local musical events before the larger form
+becomes difficult to follow. Continuity comes from authored rule tables, weighted choices and
+section memory; change comes from orchestration and the passing of formal states.
+
+**Five formal states**, advanced by a leave-probability test at each section boundary:
+
+`STILL (0) → EMERGE (1) → FLOW (2) → BLOOM (3) → DISSOLVE (4)`
+
+**Three scenes**, distinguished mainly by their samples and tempo pools: Forest, Rain,
+Steampunk.
+
+**Two modes** — *Evolve* runs without a fixed endpoint; *Timed* takes a duration (60–600 s),
+places the five states before the endpoint and stops itself.
+
+Harmony uses hand-authored first-order Markov chains, weighted `coll` pools and a voice-leading
+cost function; melody, drums and environmental events are driven by their own subpatches.
+The report (sections 4.3–4.5) covers the architecture in full; the diagrams are in
+[`docs/architecture/`](docs/architecture/).
+
 ## System architecture
+
+<details>
+<summary>View the system architecture and audio routing</summary>
 
 ![Overall system architecture](docs/architecture/overall-architecture.png)
 
-OSC carries control data from Max to VCV Rack; BlackHole returns stereo audio to Max.
+One Max/MSP patch composes harmony, melody, drums and soundscape events. Max sends OSC
+control data to VCV Rack for pitched synthesis; the stereo audio returns to Max through BlackHole.
+
+</details>
 
 ## Run it
 
@@ -58,69 +84,6 @@ Do not route the Max output back into BlackHole — that produces feedback or si
 operating manual, interface reference and recording workflow are in
 [`docs/setup-guide.md`](docs/setup-guide.md). Use the [manual verification checklist](docs/verification.md)
 to check a fresh setup.
-
-## Repository layout
-
-```
-README.md                     This page
-README.zh-CN.md               Simplified Chinese version
-REPORT.pdf                    Written project report (55 pages, with appendices)
-NOTICE.md                     Copyright and terms of use
-llms.txt                      Machine-readable index for AI tools
-docs/
-    environment.md            Author machine and saved plugin versions
-    verification.md           Static results and optional setup checks
-    release-notes.md          v1.0 release candidate notes
-    setup-guide.md            Operating manual: routing, interface, recording
-    credits-and-materials.pdf Third-party software, plug-ins and audio sources
-    architecture/             System architecture diagrams
-    ai-assistant-guide.md     Setup guide written for AI assistants
-patch/
-    Between_Chance_and_Structure.maxpat   Main Max patch
-    bpatch_and_samples/                   Max abstractions and sample folders
-        AmbientEventVoice.maxpat
-        IDMPercVoice.maxpat
-        drumRack.maxpat / drumRack_64.maxpat
-        globalClock.maxpat
-        samples/
-            README.md         Original sample content, folder by folder
-            PROVENANCE.md     Known sources, Sound IDs and provenance gaps
-            IDM_samples/  drums/{kick,snare,hat,ohat,cymbals}/  sceneAmbient/  sceneEvents/
-vcv/
-    Between_Chance_and_Structure.vcv      VCV Rack synthesis patch
-```
-
-The Max patch resolves `bpatch_and_samples/` relative to its own location, so
-`Between_Chance_and_Structure.maxpat` and that folder must stay side by side.
-
-## What is not included
-
-- **Sample libraries** — the original audio comes from commercial sample-pack and
-  field-recording material that cannot be redistributed. The folders ship empty and the patch
-  can be opened without them, but sample-based layers need replacement audio. Follow the
-  [sample replacement guide](patch/bpatch_and_samples/samples/README.md): the scene and IDM
-  pools use fixed buffer groups, so file count and loaded order matter. The original inventory
-  is included there; `samples/PROVENANCE.md` records known sources, Sound IDs and gaps.
-  Note the distinction: those libraries licence *use inside a production* (including commercial
-  release), not *redistribution of the raw files*.
-- **Videos and audio examples** — linked from Google Drive above.
-
-## How it works
-
-**Five formal states**, advanced by a leave-probability test at each section boundary:
-
-`STILL (0) → EMERGE (1) → FLOW (2) → BLOOM (3) → DISSOLVE (4)`
-
-**Three scenes**, distinguished mainly by their samples and tempo pools: Forest, Rain,
-Steampunk.
-
-**Two modes** — *Evolve* runs without a fixed endpoint; *Timed* takes a duration (60–600 s),
-places the five states before the endpoint and stops itself.
-
-Harmony uses hand-authored first-order Markov chains, weighted `coll` pools and a voice-leading
-cost function; melody, drums and environmental events are driven by their own subpatches.
-The report (sections 4.3–4.5) covers the architecture in full; the diagrams are in
-[`docs/architecture/`](docs/architecture/).
 
 ## Requirements
 
@@ -145,6 +108,58 @@ The report is the main written document: motivation and related practice, the au
 system, the five-state formal model, the Max/MSP and VCV Rack implementation, listening,
 reflection, and three appendices (AI-use statement, third-party materials, probability and
 mapping tables).
+
+## Repository layout
+
+<details>
+<summary>View the repository tree</summary>
+
+```
+README.md                     This page
+README.zh-CN.md               Simplified Chinese version
+REPORT.pdf                    Written project report (55 pages, with appendices)
+NOTICE.md                     Copyright and terms of use
+llms.txt                      Machine-readable index for AI tools
+docs/
+    environment.md            Author machine and saved plugin versions
+    verification.md           Static results and optional setup checks
+    release-notes.md          v1.0 release candidate notes
+    setup-guide.md            Operating manual: routing, interface, recording
+    credits-and-materials.pdf Third-party software, plug-ins and audio sources
+    visuals/                  README cover and editable SVG source
+    architecture/             System architecture diagrams
+    ai-assistant-guide.md     Setup guide written for AI assistants
+patch/
+    Between_Chance_and_Structure.maxpat   Main Max patch
+    bpatch_and_samples/                   Max abstractions and sample folders
+        AmbientEventVoice.maxpat
+        IDMPercVoice.maxpat
+        drumRack.maxpat / drumRack_64.maxpat
+        globalClock.maxpat
+        samples/
+            README.md         Original sample content, folder by folder
+            PROVENANCE.md     Known sources, Sound IDs and provenance gaps
+            IDM_samples/  drums/{kick,snare,hat,ohat,cymbals}/  sceneAmbient/  sceneEvents/
+vcv/
+    Between_Chance_and_Structure.vcv      VCV Rack synthesis patch
+```
+
+The Max patch resolves `bpatch_and_samples/` relative to its own location, so
+`Between_Chance_and_Structure.maxpat` and that folder must stay side by side.
+
+</details>
+
+## What is not included
+
+- **Sample libraries** — the original audio comes from commercial sample-pack and
+  field-recording material that cannot be redistributed. The folders ship empty and the patch
+  can be opened without them, but sample-based layers need replacement audio. Follow the
+  [sample replacement guide](patch/bpatch_and_samples/samples/README.md): the scene and IDM
+  pools use fixed buffer groups, so file count and loaded order matter. The original inventory
+  is included there; `samples/PROVENANCE.md` records known sources, Sound IDs and gaps.
+  Note the distinction: those libraries licence *use inside a production* (including commercial
+  release), not *redistribution of the raw files*.
+- **Videos and audio examples** — linked from Google Drive above.
 
 ## Set up with an AI assistant
 
