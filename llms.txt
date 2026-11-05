@@ -1,14 +1,14 @@
 # Between Chance and Structure
 
 > Generative ambient music system: one Max/MSP patch composes harmony, melody, drums and
-> soundscape events over a five-state formal model, with pitched synthesis in VCV Rack over
-> OSC. Author: Chaoran Yu (MSc Sound Design, University of Edinburgh, 2026).
+> soundscape events over a five-state formal model. Max sends OSC control to VCV Rack for
+> pitched synthesis; stereo audio returns to Max through BlackHole. Author: Chaoran Yu (MSc Sound Design, University of Edinburgh, 2026).
 > Sample libraries and media are not in the repository; media is on Google Drive.
 
 ## Start here
 
 - [docs/ai-assistant-guide.md](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/ai-assistant-guide.md): setup guide written for AI assistants — what to install, how to route audio, how to verify (read this first if you are helping a human)
-- [report.pdf](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/REPORT.pdf): the written project report (56 pages, with appendices)
+- [report.pdf](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/REPORT.pdf): the written project report (55 pages, with appendices)
 - [docs/setup-guide.md](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/setup-guide.md): the author's operating manual
 - [README.md](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/README.md): project overview, demo links, requirements
 - [README.zh-CN.md](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/README.zh-CN.md): 简体中文说明
@@ -19,13 +19,20 @@
 - Main patch: `patch/Between_Chance_and_Structure.maxpat`
 - VCV patch: `vcv/Between_Chance_and_Structure.vcv` (zstd-compressed tar; `patch.json` inside)
 - `Between_Chance_and_Structure.maxpat` and `patch/bpatch_and_samples/` must stay side by side
-- The patch loads sample folders with `readfolder`; filenames are never referenced, so any WAV files work
+- The patch loads numbered buffers with `readfolder`; scene beds require indices 1–15 and IDM roles require 1–57. Follow the sample replacement guide for counts and loaded order
 - 58 VCV modules across 17 plugins; the exact list is in section 4 of the AI assistant guide
 - Five formal states: STILL, EMERGE, FLOW, BLOOM, DISSOLVE. Scenes: Forest, Rain, Steampunk. Modes: Evolve, Timed
 
+- Saved plugin versions and author-provided hardware: `docs/environment.md`
+- The author confirmed normal operation; static checks and optional fresh-setup checks: `docs/verification.md`
+
 ## Documents
 
-- `REPORT.pdf` (repository root) — the written project report, 56 pages
+- [Sample replacement guide](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/patch/bpatch_and_samples/samples/README.md): counts, role groups and loaded buffer order
+- [Environment manifest](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/environment.md): author-provided hardware and saved plugin versions
+- [Verification checklist](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/verification.md): static results, author confirmation and optional setup checks
+
+- `REPORT.pdf` (repository root) — the written project report, 55 pages
 - `docs/credits-and-materials.pdf` — third-party software, plug-ins and audio sources
 - `docs/architecture/` — system architecture diagrams
 

@@ -8,22 +8,12 @@ Chaoran Yu · MSc Sound Design, University of Edinburgh · August 2026
 
 A generative music system for long-form ambient and lo-fi material that keeps a readable
 formal shape. One Max/MSP patch composes harmony, melody, drums and soundscape events;
-pitched synthesis runs in VCV Rack and returns to Max over OSC.
+Max sends OSC control data to VCV Rack for pitched synthesis; the stereo audio returns
+to Max through BlackHole.
 
 The project asks how far probability can vary local musical events before the larger form
 becomes difficult to follow. Continuity comes from authored rule tables, weighted choices and
 section memory; change comes from orchestration and the passing of formal states.
-
-## The written report
-
-[![Project report — PDF, 56 pages](https://img.shields.io/badge/Project_report-PDF_56_pages-d73a4a?style=for-the-badge)](REPORT.pdf)
-
-[**Between Chance and Structure — project report (PDF, 56 pages)**](REPORT.pdf)
-
-The report is the main written document: motivation and related practice, the authored rule
-system, the five-state formal model, the Max/MSP and VCV Rack implementation, listening,
-reflection, and three appendices (AI-use statement, third-party materials, probability and
-mapping tables).
 
 ## Demonstration
 
@@ -40,41 +30,47 @@ Long videos and audio examples are hosted on Google Drive rather than stored her
 
 All links are set to *anyone with the link can view*.
 
+## What I built
+
+- A five-state formal controller with Evolve and Timed modes, section memory and orchestration rules.
+- Hand-authored harmonic transition tables, weighted choices and a minimum-movement voice-leading cost function.
+- Melody and drum phrase memory, conditional IDM percussion, scene-based soundscapes, and OSC integration with VCV Rack.
+
+## System architecture
+
+![Overall system architecture](docs/architecture/overall-architecture.png)
+
+OSC carries control data from Max to VCV Rack; BlackHole returns stereo audio to Max.
+
 ## Run it
 
 1. Install **Max 9.1.4** and **VCV Rack 2.6.6**, plus the VCV plugins listed under
    [Requirements](#requirements).
-2. Open `vcv/Between_Chance_and_Structure.vcv`; set its Audio Interface to **BlackHole 16ch**,
+2. Supply replacement audio using the [sample guide](patch/bpatch_and_samples/samples/README.md).
+   The sample folders ship empty; the scene and IDM pools require specific buffer groups.
+3. Open `vcv/Between_Chance_and_Structure.vcv`; set its Audio Interface to **BlackHole 16ch**,
    48 kHz, 256-sample block.
-3. Open `patch/Between_Chance_and_Structure.maxpat`; set Max input to **BlackHole 16ch** and
+4. Open `patch/Between_Chance_and_Structure.maxpat`; set Max input to **BlackHole 16ch** and
    output to your physical device.
-4. Choose a scene and mode, then press **START**.
+5. Enable audio in Max, choose a scene and mode, then press **START**.
 
 Do not route the Max output back into BlackHole — that produces feedback or silence. The full
 operating manual, interface reference and recording workflow are in
-[`docs/setup-guide.md`](docs/setup-guide.md).
-
-## Set up with an AI assistant
-
-To have an AI assistant walk you (or itself) through the installation, paste this line into it:
-
-```
-Read https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/ai-assistant-guide.md and help me get Between Chance and Structure running.
-```
-
-That file is a setup guide written for AI assistants: what to clone, which VCV plugins to
-install, how to route the audio, how to verify the result, and where the setup usually breaks.
-[`llms.txt`](llms.txt) carries the same pointers in the llms.txt format.
+[`docs/setup-guide.md`](docs/setup-guide.md). Use the [manual verification checklist](docs/verification.md)
+to check a fresh setup.
 
 ## Repository layout
 
 ```
 README.md                     This page
 README.zh-CN.md               Simplified Chinese version
-REPORT.pdf                    Written project report (56 pages, with appendices)
+REPORT.pdf                    Written project report (55 pages, with appendices)
 NOTICE.md                     Copyright and terms of use
 llms.txt                      Machine-readable index for AI tools
 docs/
+    environment.md            Author machine and saved plugin versions
+    verification.md           Static results and optional setup checks
+    release-notes.md          v1.0 release candidate notes
     setup-guide.md            Operating manual: routing, interface, recording
     credits-and-materials.pdf Third-party software, plug-ins and audio sources
     architecture/             System architecture diagrams
@@ -88,7 +84,7 @@ patch/
         globalClock.maxpat
         samples/
             README.md         Original sample content, folder by folder
-            PROVENANCE.md     Source library and Sound ID for each file
+            PROVENANCE.md     Known sources, Sound IDs and provenance gaps
             IDM_samples/  drums/{kick,snare,hat,ohat,cymbals}/  sceneAmbient/  sceneEvents/
 vcv/
     Between_Chance_and_Structure.vcv      VCV Rack synthesis patch
@@ -101,9 +97,10 @@ The Max patch resolves `bpatch_and_samples/` relative to its own location, so
 
 - **Sample libraries** — the original audio comes from commercial sample-pack and
   field-recording material that cannot be redistributed. The folders ship empty and the patch
-  still runs: it loads them with `readfolder`, so **any WAV files you place there are used**,
-  and filenames are never referenced. `samples/README.md` records what was in them originally;
-  `samples/PROVENANCE.md` maps every file to its source library and Sound ID.
+  can be opened without them, but sample-based layers need replacement audio. Follow the
+  [sample replacement guide](patch/bpatch_and_samples/samples/README.md): the scene and IDM
+  pools use fixed buffer groups, so file count and loaded order matter. The original inventory
+  is included there; `samples/PROVENANCE.md` records known sources, Sound IDs and gaps.
   Note the distinction: those libraries licence *use inside a production* (including commercial
   release), not *redistribution of the raw files*.
 - **Videos and audio examples** — linked from Google Drive above.
@@ -127,12 +124,39 @@ The report (sections 4.3–4.5) covers the architecture in full; the diagrams ar
 
 ## Requirements
 
+Developed on macOS. Author-provided environment: macOS Tahoe 26.6.2, 16-inch MacBook Pro,
+Apple M5 Pro, 64 GB RAM. See the [environment and saved plugin versions](docs/environment.md).
+Windows and Linux routing have not been verified for this project.
+
 - **Max 9.1.4** (developed and tested on this version)
 - **VCV Rack 2.6.6** with these plugins from the VCV Library: 4ms-ROMplers, 4msCompany,
   ALMFree, AlrightDevices, Befaco, Bogaudio, DrumKit, HetrickCV, MindMeldModular, NYSTHI,
   Submit, SurgeXTRack, Valley, Venom, trowaSoft
 - **BlackHole 16ch** (or an equivalent virtual audio device) to return VCV Rack audio to Max
 - A physical audio output — headphones, speakers or an audio interface
+
+## The written report
+
+[![Project report — PDF, 55 pages](https://img.shields.io/badge/Project_report-PDF_55_pages-d73a4a?style=for-the-badge)](REPORT.pdf)
+
+[**Between Chance and Structure — project report (PDF, 55 pages)**](REPORT.pdf)
+
+The report is the main written document: motivation and related practice, the authored rule
+system, the five-state formal model, the Max/MSP and VCV Rack implementation, listening,
+reflection, and three appendices (AI-use statement, third-party materials, probability and
+mapping tables).
+
+## Set up with an AI assistant
+
+To have an AI assistant walk you (or itself) through the installation, paste this line into it:
+
+```
+Read https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/ai-assistant-guide.md and help me get Between Chance and Structure running.
+```
+
+That file is a setup guide written for AI assistants: what to clone, which VCV plugins to
+install, how to route the audio, how to verify the result, and where the setup usually breaks.
+[`llms.txt`](llms.txt) carries the same pointers in the llms.txt format.
 
 ## Credits
 

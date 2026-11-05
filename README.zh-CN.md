@@ -7,21 +7,11 @@
 俞超然（Chaoran Yu）· 爱丁堡大学 声音设计硕士（MSc Sound Design）· 2026 年 8 月
 
 一套用于生成长篇氛围音乐与 Lo-fi 材料的生成式音乐系统，并让整体曲式保持可辨识的结构。
-一个 Max/MSP 主 patch 负责和声、旋律、鼓组与环境声事件；带音高的合成在 VCV Rack 中完成，
-经 OSC 送回 Max。
+一个 Max/MSP 主 patch 负责和声、旋律、鼓组与环境声事件，通过 OSC 向 VCV Rack 发送控制数据；
+带音高的合成在 VCV Rack 中完成，立体声音频经 BlackHole 返回 Max。
 
 本项目要回答的问题是：**概率能在多大程度上改变局部的音乐事件，而整体曲式仍不失可读性。**
 连续性来自手工编写的规则表、加权选择与段记忆；变化则来自编排层与形式状态的推进。
-
-## 项目报告
-
-[![项目报告 —— PDF，56 页](https://img.shields.io/badge/%E9%A1%B9%E7%9B%AE%E6%8A%A5%E5%91%8A-PDF%EF%BC%8C56%E9%A1%B5-d73a4a?style=for-the-badge)](REPORT.pdf)
-
-[**Between Chance and Structure —— 项目报告（PDF，56 页）**](REPORT.pdf)
-
-报告是主要的文字成果：动机与相关实践、手工编写的规则系统、五状态形式模型、
-Max/MSP 与 VCV Rack 的实现、试听与反思，以及三个附录（AI 使用声明、第三方素材、
-概率与映射表）。
 
 ## 演示
 
@@ -38,38 +28,44 @@ Max/MSP 与 VCV Rack 的实现、试听与反思，以及三个附录（AI 使�
 
 以上链接均设置为「知道链接的人均可查看」。
 
+## 我实现的内容
+
+- 五状态形式控制器、Evolve／Timed 模式、段落记忆与声部编排规则。
+- 手工编写的和声转移表、加权选择与最小移动声部进行代价函数。
+- 旋律和鼓组的乐句记忆、条件 IDM 打击乐、场景环境声，以及与 VCV Rack 的 OSC 集成。
+
+## 系统架构
+
+![系统总架构](docs/architecture/overall-architecture.png)
+
+OSC 将控制数据从 Max 送往 VCV Rack；BlackHole 将立体声音频返回 Max。
+
 ## 运行
 
 1. 安装 **Max 9.1.4** 与 **VCV Rack 2.6.6**，以及[环境要求](#环境要求)中列出的 VCV 插件。
-2. 打开 `vcv/Between_Chance_and_Structure.vcv`，把 Audio Interface 设为 **BlackHole 16ch**、
+2. 按[样本替换指南](patch/bpatch_and_samples/samples/README.md)补充 WAV。样本目录初始为空；
+   环境声床和 IDM 需要遵循固定的 buffer 分组。
+3. 打开 `vcv/Between_Chance_and_Structure.vcv`，把 Audio Interface 设为 **BlackHole 16ch**、
    48 kHz、256 采样块。
-3. 打开 `patch/Between_Chance_and_Structure.maxpat`，Max 输入设为 **BlackHole 16ch**，
+4. 打开 `patch/Between_Chance_and_Structure.maxpat`，Max 输入设为 **BlackHole 16ch**，
    输出设为你的实体设备。
-4. 选择场景与模式，按 **START**。
+5. 启用 Max 音频，选择场景与模式，按 **START**。
 
 不要把 Max 的输出再送回 BlackHole——那会造成反馈或静音。完整的操作手册、界面说明与录音流程见
-[`docs/setup-guide.md`](docs/setup-guide.md)。
-
-## 交给 AI 助手来装
-
-如果希望让 AI 助手带着你（或由它自己）完成安装，把下面这行贴给它：
-
-```
-Read https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/ai-assistant-guide.md and help me get Between Chance and Structure running.
-```
-
-这份文件是专门写给 AI 助手的安装说明：要克隆什么、装哪些 VCV 插件、音频怎么路由、如何验证、
-以及通常会在哪里卡住。[`llms.txt`](llms.txt) 用 llms.txt 格式给出同样的入口。
+[`docs/setup-guide.md`](docs/setup-guide.md)。新环境可按[人工验收清单](docs/verification.md)逐项检查。
 
 ## 仓库结构
 
 ```
 README.md                     本页
 README.zh-CN.md               简体中文版
-REPORT.pdf                    项目报告全文（56 页，含附录）
+REPORT.pdf                    项目报告全文（55 页，含附录）
 NOTICE.md                     版权与使用条款
 llms.txt                      给 AI 工具用的机器可读索引
 docs/
+    environment.md            作者环境与保存的插件版本
+    verification.md           静态检查、作者确认与可选检查
+    release-notes.md          v1.0 候选版发布说明
     setup-guide.md            操作手册：音频路由、界面、录音
     credits-and-materials.pdf 第三方软件、插件与音频素材来源
     architecture/             系统架构图
@@ -83,7 +79,7 @@ patch/
         globalClock.maxpat
         samples/
             README.md         原样本内容清单（按目录）
-            PROVENANCE.md     每个文件的来源库与 Sound ID
+            PROVENANCE.md     已知来源、Sound ID 与追溯缺口
             IDM_samples/  drums/{kick,snare,hat,ohat,cymbals}/  sceneAmbient/  sceneEvents/
 vcv/
     Between_Chance_and_Structure.vcv      VCV Rack 合成 patch
@@ -95,9 +91,10 @@ Max patch 以自身位置为基准解析 `bpatch_and_samples/`，因此
 ## 未包含的内容
 
 - **样本库** —— 原始音频来自商业采样包与实地录音，无法在此重新分发。目录随仓库空置，patch
-  仍可运行：它用 `readfolder` 整目录加载，**放入任意 WAV 都会被使用**，从不按文件名引用。
-  `samples/README.md` 记录了原本每个目录里有什么，`samples/PROVENANCE.md` 把每个文件对应到
-  来源库与 Sound ID。注意区别：这些库授权的是**在作品中使用**（含商业发行），
+  可以打开，但采样声部需要自行补充音频。请按[样本替换指南](patch/bpatch_and_samples/samples/README.md)
+  准备素材：环境声床须按场景分为三组各五个，IDM 须按五类音色填满 1–57 号 buffer，并检查加载顺序。
+  该指南保留原始文件清单；`samples/PROVENANCE.md` 记录已知来源、Sound ID 与追溯缺口。
+  这些库授权的是**在作品中使用**（含商业发行），
   而不是**再分发原始文件**。
 - **视频与音频示例** —— 见上方 Google Drive 链接。
 
@@ -119,12 +116,37 @@ Steampunk（蒸汽朋克）。
 
 ## 环境要求
 
+项目在 macOS 上开发。作者提供的环境为 macOS Tahoe 26.6.2、16 英寸 MacBook Pro、
+Apple M5 Pro、64 GB 内存。详见[环境与 patch 保存的插件版本](docs/environment.md)。
+本项目尚未验证 Windows 和 Linux 的音频路由。
+
 - **Max 9.1.4**（开发与测试所用版本）
 - **VCV Rack 2.6.6**，并从 VCV Library 安装以下插件：4ms-ROMplers、4msCompany、ALMFree、
   AlrightDevices、Befaco、Bogaudio、DrumKit、HetrickCV、MindMeldModular、NYSTHI、Submit、
   SurgeXTRack、Valley、Venom、trowaSoft
 - **BlackHole 16ch**（或同类虚拟音频设备），用于把 VCV Rack 的音频送回 Max
 - 一副实体输出（耳机、音箱或声卡）
+
+## 项目报告
+
+[![项目报告 —— PDF，55 页](https://img.shields.io/badge/%E9%A1%B9%E7%9B%AE%E6%8A%A5%E5%91%8A-PDF%EF%BC%8C55%E9%A1%B5-d73a4a?style=for-the-badge)](REPORT.pdf)
+
+[**Between Chance and Structure —— 项目报告（PDF，55 页）**](REPORT.pdf)
+
+报告是主要的文字成果：动机与相关实践、手工编写的规则系统、五状态形式模型、
+Max/MSP 与 VCV Rack 的实现、试听与反思，以及三个附录（AI 使用声明、第三方素材、
+概率与映射表）。
+
+## 交给 AI 助手来装
+
+如果希望让 AI 助手带着你（或由它自己）完成安装，把下面这行贴给它：
+
+```
+Read https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/ai-assistant-guide.md and help me get Between Chance and Structure running.
+```
+
+这份文件是专门写给 AI 助手的安装说明：要克隆什么、装哪些 VCV 插件、音频怎么路由、如何验证、
+以及通常会在哪里卡住。[`llms.txt`](llms.txt) 用 llms.txt 格式给出同样的入口。
 
 ## 致谢
 

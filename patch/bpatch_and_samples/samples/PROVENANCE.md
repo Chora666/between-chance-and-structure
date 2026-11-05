@@ -4,7 +4,7 @@ Where the audio in this project came from, and why the files are not distributed
 
 这份表说明每个样本的来源。结论：**除 1 个自录文件外，其余全部来自第三方素材库，不得再分发。**
 
-The authoritative record is [`../../docs/credits-and-materials.pdf`](../../docs/credits-and-materials.pdf)
+The authoritative record is [`../../../docs/credits-and-materials.pdf`](../../../docs/credits-and-materials.pdf)
 (including per-source Sound IDs). This page only reorganises that record by file, so you can
 tell which files you would need to supply yourself.
 

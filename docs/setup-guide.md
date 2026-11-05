@@ -19,7 +19,8 @@ Open the project from the folder as cloned, without changing its internal struct
 
 ## 2. Software and audio requirements
 
-The submitted project was created and tested with:
+The project documents the following software setup (see the
+[environment manifest](environment.md) for author-provided hardware and saved plugin versions):
 
 - Max 9.1.4
 - VCV Rack 2.6.6
@@ -36,6 +37,11 @@ Valley, Venom and trowaSoft
 
 Install any missing modules from the VCV Library before opening the Rack patch. The
 trowaSoft `cvOSCcv` module is required for communication from Max to VCV Rack.
+
+Before playback, supply replacement WAV files following the
+[sample replacement guide](../patch/bpatch_and_samples/samples/README.md). All eight sample
+folders ship empty. Scene beds use fixed groups across buffers 1–15; IDM roles use 1–57.
+Check counts and loaded order in Max before expecting the complete arrangement.
 
 ## 3. First-time audio setup
 
@@ -151,3 +157,9 @@ and soundscape layers, the VCV Rack return and any imported user audio.
 RECORD opens and prepares the output file; it does not start the composition by itself. Use
 CANCEL RECORD to abort a timed run. CLEAR FILE applies to imported audio and does not delete a
 completed recording.
+
+## 9. Verify a fresh setup
+
+Use the [verification checklist](verification.md) to record scene, mode, import and recording
+checks on a new installation. The author has confirmed normal project operation; this
+documentation update did not include a new runtime test.

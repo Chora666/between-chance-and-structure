@@ -26,7 +26,7 @@ ask them to confirm what they see. Do not claim the audio works — only the hum
 | Sample rate | 48000 Hz, block size 256 |
 | Virtual audio device | BlackHole 16ch (developed on macOS) |
 | VCV modules | 58 modules across 17 plugins — extract the exact list with the command in §4 |
-| Sample requirement | 8 folders, read with `readfolder`; **filenames are never referenced** |
+| Sample requirement | 8 folders; scene and IDM pools require fixed buffer counts and role groups |
 | Media | long videos and audio examples are on Google Drive, not in the repo |
 
 Sizes: the repo is about 10 MB. The patches are `patch/*.maxpat` (4.7 MB) and
@@ -39,14 +39,15 @@ git clone https://github.com/Chora666/between-chance-and-structure.git
 cd between-chance-and-structure
 ```
 
-Nothing needs building. Do not move or rename the numbered folders: the Max patch resolves
+Nothing needs building. Do not move or rename the project folders: the Max patch resolves
 `bpatch_and_samples/` relative to its own location.
 
 ## 3. Check the sample folders
 
 The patch calls `readfolder Patcher:/bpatch_and_samples/samples/<folder>`, so it loads
-whatever audio files are present and never looks for a specific filename. The eight folders
-must exist:
+audio into numbered buffers rather than requesting individual filenames. The scene and IDM
+pools select fixed buffer groups; follow the [sample replacement guide](../patch/bpatch_and_samples/samples/README.md)
+for counts, roles and buffer-order verification. The eight folders must exist:
 
 ```
 patch/bpatch_and_samples/samples/
@@ -55,27 +56,33 @@ patch/bpatch_and_samples/samples/
 ```
 
 ```bash
-cd patch/bpatch_and_samples/samples
+(
+cd patch/bpatch_and_samples/samples || exit 1
 for d in IDM_samples drums/kick drums/snare drums/hat drums/ohat drums/cymbals sceneAmbient sceneEvents; do
   printf '%-14s %s\n' "$d" "$(ls "$d"/*.wav 2>/dev/null | wc -l | tr -d ' ')"
 done
+)
 ```
 
 They ship **empty**. That is deliberate: the original audio comes from commercial sample
 libraries that cannot be redistributed (`PROVENANCE.md` says which). Three options,
 in order of preference:
 
-1. **Run with the human's own audio.** Drop any `.wav` files into the eight folders — the
-   system runs, and the sound is whatever they put in. This is the fastest path to a working
-   demo and needs no licences.
+1. **Run with replacement audio.** Use recordings the human owns or is permitted to use.
+   Supply 15 scene beds and 57 IDM files in the documented buffer groups, plus drum and
+   event samples. Verify the loaded order in Max; arbitrary file counts are insufficient.
 2. **Reproduce the original sound** by acquiring the libraries listed in
-   `PROVENANCE.md` (it gives library names and Sound IDs).
+   `PROVENANCE.md` (it gives known library names, Sound IDs and provenance gaps).
 3. Do not download sample libraries from unofficial mirrors.
 
 Original per-folder counts, for reference: `IDM_samples` 57, `drums/kick` 10, `drums/snare`
 10, `drums/hat` 10, `drums/ohat` 6, `drums/cymbals` 6, `sceneAmbient` 15, `sceneEvents` 9.
 
 ## 4. Check the VCV Rack plugins
+
+The [environment manifest](environment.md) records exact saved plugin versions and
+author-provided machine details. Follow the [verification checklist](verification.md) for
+optional fresh-setup checks and author confirmation; do not claim a new runtime test was performed.
 
 The `.vcv` file is a zstd-compressed tar. Extract the requirement list directly from it:
 
@@ -106,7 +113,7 @@ dir "%LOCALAPPDATA%\Rack2\plugins-*"
 ```
 
 `trowaSoft/cvOSCcv` is load-bearing: it carries the OSC control data from Max into Rack
-(five instances). If it is missing, Max will run but nothing will sound.
+(five instances). If it is missing, VCV voices will not receive the intended OSC control data.
 
 Tools used above: `zstd`, `tar`, `jq`. Without `jq`, pipe to
 `python3 -c "import sys,json;print(sorted({m['plugin'] for m in json.load(sys.stdin)['modules']}))"`.
@@ -140,8 +147,8 @@ untested with this project. Say so plainly instead of improvising.
 
 Order matters: **VCV first, then Max.**
 
-1. VCV Rack open and playing (its level meters move when you touch nothing — check the Rack
-   audio status shows the device running).
+1. VCV Rack open with its audio device running. Check for output after START; moving
+   meters before Max sends control data are not a startup requirement.
 2. Open the Max patch; wait for the sample pools and drum-machine abstractions to load.
 3. Presentation mode; set the master level low; enable Max audio.
 4. Choose a scene (Forest / Rain / Steampunk) and a mode (Evolve / Timed).
@@ -167,7 +174,7 @@ itself.
 | Patch will not open; Rack complains about plugins | A required plugin is not installed | Install the missing ones from the VCV Library, restart Rack |
 | Max opens with missing-file warnings | A sample folder is missing or in the wrong place | Keep the exact folder names; files may be empty but folders must exist |
 | Everything runs, but silence | Output routed into BlackHole, or wrong input device in Max | Max input = BlackHole, output = physical device |
-| Drums / ambience never trigger | Drum and scene folders are empty | Put some `.wav` files in them |
+| Drums / ambience never trigger | Drum and scene folders are empty | Follow the sample guide, including fixed scene/IDM groups |
 | Pitch or timing drifts | Sample rates differ between Rack and Max | Both 48000 Hz |
 | No OSC response in Rack | `cvOSCcv` not running, or ports blocked | Leave the five `cvOSCcv` modules active; Max sends on UDP |
 

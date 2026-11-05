@@ -6,12 +6,54 @@ commercial sample packs and field recordings, which cannot be redistributed.
 See [PROVENANCE.md](PROVENANCE.md) for where each file came from (source library and
 Sound ID) and why the folder cannot be redistributed.
 
-To run the system, place any WAV files in the same folder structure below. The Max patch
-loads these folders with `readfolder`, so filenames are not referenced individually — the
-structure and the role of each folder are what matter. The list below is the original
-content, useful if you want to reproduce the original sound design.
+## Supplying replacement audio
 
-Total: **123 files** in 8 folders.
+The eight folders ship empty. Supply WAV files you recorded or have permission to use,
+then reopen the main patch to reload the pools. An empty folder provides no sample audio;
+the VCV synthesis is a separate layer and still requires its plugins and audio routing.
+The public checkout does not reproduce the full demonstration sound without replacement samples.
+
+`readfolder` assigns numbered buffers. Playback selects those numbers, rather than requesting
+individual filenames. **Counts and buffer order matter**, especially in the two fixed pools:
+
+| Folder | Original count | Selection rule / replacement requirement |
+|---|---:|---|
+| `IDM_samples/` | 57 | Fixed role pools address buffers 1–57; supply 57 files in the role groups below |
+| `drums/kick/` | 10 | Selection range follows the loaded count; supply at least one kick |
+| `drums/snare/` | 10 | Selection range follows the loaded count; supply at least one snare/clap |
+| `drums/hat/` | 10 | Selection range follows the loaded count; supply at least one closed hi-hat |
+| `drums/ohat/` | 6 | Selection range follows the loaded count; supply at least one open hi-hat |
+| `drums/cymbals/` | 6 | Selection range follows the loaded count; supply at least one cymbal |
+| `sceneAmbient/` | 15 | Fixed scene pools address buffers 1–15; supply five beds per scene |
+| `sceneEvents/` | 9 | Selection range follows the loaded count; supply at least one foreground event for Forest |
+
+### Fixed buffer groups
+
+| Pool | Buffer indices | Material |
+|---|---|---|
+| `sceneAmbientBedPool` | 1–5 | Forest beds |
+| `sceneAmbientBedPool` | 6–10 | Rain beds |
+| `sceneAmbientBedPool` | 11–15 | Steampunk / mechanical beds |
+| `idmPercPool` | 1–10 | Foley / clicks |
+| `idmPercPool` | 11–20 | Glitches |
+| `idmPercPool` | 21–37 | Impacts / metallic sounds |
+| `idmPercPool` | 38–47 | Noise bursts |
+| `idmPercPool` | 48–57 | Reverse swells |
+
+Use zero-padded names such as `01_forest.wav` through `15_mechanical.wav`, and
+`01_foley.wav` through `57_reverse.wav`, to make the intended order easy to inspect.
+After loading, open the corresponding `polybuffer~` object in Max and verify its buffer list
+against the table; filenames alone do not prove the loaded order. Avoid extra files in the
+fixed pools. Fewer files can leave referenced buffers absent; extra files beyond the listed
+indices are not selected by the fixed role/scene tables.
+
+Use short one-shots for drums and IDM, longer recordings for looping beds, and short
+foreground recordings for events. Use 48 kHz audio to match the documented session setup.
+For a first playback check, you can import a stereo WAV through **Drop Audio Here**;
+this supplies user audio but does not populate the drum or IDM pools.
+
+The following inventory records the **original 123 files**. It is a reference for their roles
+and provenance, not a bundle of downloadable samples.
 
 ## `IDM_samples/`
 
