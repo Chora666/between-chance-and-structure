@@ -1,6 +1,6 @@
 **English** · [简体中文](README.zh-CN.md)
 
-# Between Chance and Structure
+[![Between Chance and Structure — graphite cover with the actual Max/MSP interface](docs/visuals/cover.png)](docs/visuals/max-presentation.png)
 
 **Designing a Generative System for Ambient Music**
 
@@ -8,10 +8,6 @@ A generative ambient and lo-fi music system shaped by probability, section memor
 five-state formal model.
 
 [**Watch the demo ↗**](https://drive.google.com/file/d/17yuBqAit3PdmheTKZqrVmPnGPdnH5vLY/view?usp=sharing) · [**Listen ↗**](https://drive.google.com/file/d/1ApeeHdoXmLhVu1l2J4Wy0cETJyLGmT0u/view?usp=sharing) · [**Read the report**](REPORT.pdf) · [**Run it**](#run-it)
-
-[![Max/MSP running interface showing formal states, harmony, output meters and the drum pattern engine](docs/visuals/max-presentation.png)](docs/visuals/max-presentation.png)
-
-*Presentation Mode during a run. Click the image to view it at full resolution.*
 
 Chaoran Yu · MSc Sound Design, University of Edinburgh · August 2026
 
@@ -130,7 +126,7 @@ docs/
     release-notes.md          v1.0 release candidate notes
     setup-guide.md            Operating manual: routing, interface, recording
     credits-and-materials.pdf Third-party software, plug-ins and audio sources
-    visuals/                  Screenshot of the running Max interface
+    visuals/                  Cover, editable SVG and running interface screenshot
     architecture/             System architecture diagrams
     ai-assistant-guide.md     Setup guide written for AI assistants
 patch/

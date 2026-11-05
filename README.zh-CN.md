@@ -1,16 +1,12 @@
 [English](README.md) · **简体中文**
 
-# Between Chance and Structure
+[![Between Chance and Structure：灰色封面内展示真实 Max/MSP 工程界面](docs/visuals/cover.png)](docs/visuals/max-presentation.png)
 
 **为氛围音乐设计的生成系统**
 
 一套用概率、段落记忆与五状态形式模型，组织长篇氛围音乐和 Lo-fi 材料的生成式系统。
 
 [**观看演示 ↗**](https://drive.google.com/file/d/17yuBqAit3PdmheTKZqrVmPnGPdnH5vLY/view?usp=sharing) · [**试听 ↗**](https://drive.google.com/file/d/1ApeeHdoXmLhVu1l2J4Wy0cETJyLGmT0u/view?usp=sharing) · [**阅读报告**](REPORT.pdf) · [**运行指南**](#运行)
-
-[![Max/MSP 运行界面：五状态形式、和声、输出电平与鼓组 Pattern Engine](docs/visuals/max-presentation.png)](docs/visuals/max-presentation.png)
-
-*工程运行中的 Presentation Mode。点击图片查看原始大图。*
 
 俞超然（Chaoran Yu）· 爱丁堡大学声音设计硕士 · 2026 年 8 月
 
@@ -123,7 +119,7 @@ docs/
     release-notes.md          v1.0 候选版发布说明
     setup-guide.md            操作手册：音频路由、界面、录音
     credits-and-materials.pdf 第三方软件、插件与音频素材来源
-    visuals/                  工程运行界面截图
+    visuals/                  首页封面、SVG 源文件与工程截图
     architecture/             系统架构图
     ai-assistant-guide.md     写给 AI 助手的安装说明
 patch/
