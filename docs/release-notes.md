@@ -9,11 +9,12 @@ See the [verification notes](verification.md) for the static checks and author c
 
 - The report has been through a typography and layout pass: consistent fonts, corrected
   contents page numbers, chapters start on new pages, and the Appendix C screenshots are
-  replaced by tables. The report is now 57 pages.
+  replaced by tables. A voice-mask table is added, and the seventh-chord table is retitled
+  "Root-degree pools by mode and harmonic function". The report is now 59 pages.
 - `docs/credits-and-materials.pdf` is converted from US Letter to A4.
 
 The 55-page figure in the v1.0 release candidate summary below records that preparation;
-the updated `REPORT.pdf` supersedes it and is 57 pages.
+the updated `REPORT.pdf` supersedes it and is 59 pages.
 
 ## Between Chance and Structure
 

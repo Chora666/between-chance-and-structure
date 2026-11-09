@@ -94,9 +94,9 @@ Apple M5 Pro、64 GB 内存。详见[环境与 patch 保存的插件版本](docs
 
 ## 项目报告
 
-[![项目报告 —— PDF，57 页](https://img.shields.io/badge/%E9%A1%B9%E7%9B%AE%E6%8A%A5%E5%91%8A-PDF%EF%BC%8C57%E9%A1%B5-d73a4a?style=for-the-badge)](REPORT.pdf)
+[![项目报告 —— PDF，59 页](https://img.shields.io/badge/%E9%A1%B9%E7%9B%AE%E6%8A%A5%E5%91%8A-PDF%EF%BC%8C59%E9%A1%B5-d73a4a?style=for-the-badge)](REPORT.pdf)
 
-[**Between Chance and Structure —— 项目报告（PDF，57 页）**](REPORT.pdf)
+[**Between Chance and Structure —— 项目报告（PDF，59 页）**](REPORT.pdf)
 
 报告是主要的文字成果：动机与相关实践、手工编写的规则系统、五状态形式模型、
 Max/MSP 与 VCV Rack 的实现、试听与反思，以及三个附录（AI 使用声明、第三方素材、
@@ -110,7 +110,7 @@ Max/MSP 与 VCV Rack 的实现、试听与反思，以及三个附录（AI 使�
 ```
 README.md                     本页
 README.zh-CN.md               简体中文版
-REPORT.pdf                    项目报告全文（57 页，含附录）
+REPORT.pdf                    项目报告全文（59 页，含附录）
 NOTICE.md                     版权与使用条款
 llms.txt                      给 AI 工具用的机器可读索引
 docs/

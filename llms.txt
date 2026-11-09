@@ -8,7 +8,7 @@
 ## Start here
 
 - [docs/ai-assistant-guide.md](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/ai-assistant-guide.md): setup guide written for AI assistants — what to install, how to route audio, how to verify (read this first if you are helping a human)
-- [report.pdf](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/REPORT.pdf): the written project report (57 pages, with appendices)
+- [report.pdf](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/REPORT.pdf): the written project report (59 pages, with appendices)
 - [docs/setup-guide.md](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/setup-guide.md): the author's operating manual
 - [README.md](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/README.md): project overview, demo links, requirements
 - [README.zh-CN.md](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/README.zh-CN.md): 简体中文说明
@@ -32,7 +32,7 @@
 - [Environment manifest](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/environment.md): author-provided hardware and saved plugin versions
 - [Verification checklist](https://raw.githubusercontent.com/Chora666/between-chance-and-structure/main/docs/verification.md): static results, author confirmation and optional setup checks
 
-- `REPORT.pdf` (repository root) — the written project report, 57 pages
+- `REPORT.pdf` (repository root) — the written project report, 59 pages
 - `docs/credits-and-materials.pdf` — third-party software, plug-ins and audio sources
 - `docs/architecture/` — system architecture diagrams
 
