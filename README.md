@@ -100,9 +100,9 @@ Windows and Linux routing have not been verified for this project.
 
 ## The written report
 
-[![Project report — PDF, 55 pages](https://img.shields.io/badge/Project_report-PDF_55_pages-d73a4a?style=for-the-badge)](REPORT.pdf)
+[![Project report — PDF, 57 pages](https://img.shields.io/badge/Project_report-PDF_57_pages-d73a4a?style=for-the-badge)](REPORT.pdf)
 
-[**Between Chance and Structure — project report (PDF, 55 pages)**](REPORT.pdf)
+[**Between Chance and Structure — project report (PDF, 57 pages)**](REPORT.pdf)
 
 The report is the main written document: motivation and related practice, the authored rule
 system, the five-state formal model, the Max/MSP and VCV Rack implementation, listening,
@@ -117,7 +117,7 @@ mapping tables).
 ```
 README.md                     This page
 README.zh-CN.md               Simplified Chinese version
-REPORT.pdf                    Written project report (55 pages, with appendices)
+REPORT.pdf                    Written project report (57 pages, with appendices)
 NOTICE.md                     Copyright and terms of use
 llms.txt                      Machine-readable index for AI tools
 docs/

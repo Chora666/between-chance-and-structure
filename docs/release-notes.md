@@ -5,6 +5,16 @@ The author confirmed normal operation on 5 November 2026 and requested the docum
 update be pushed without additional runtime acceptance tests or a new interface screenshot.
 See the [verification notes](verification.md) for the static checks and author confirmation.
 
+## Report update: 9 November 2026
+
+- The report has been through a typography and layout pass: consistent fonts, corrected
+  contents page numbers, chapters start on new pages, and the Appendix C screenshots are
+  replaced by tables. The report is now 57 pages.
+- `docs/credits-and-materials.pdf` is converted from US Letter to A4.
+
+The 55-page figure in the v1.0 release candidate summary below records that preparation;
+the updated `REPORT.pdf` supersedes it and is 57 pages.
+
 ## Between Chance and Structure
 
 A generative ambient and lo-fi music system built with Max/MSP and VCV Rack.

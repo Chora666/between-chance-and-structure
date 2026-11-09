@@ -10,7 +10,7 @@ The documentation update was checked against the saved project files:
 - Scene-bed indices are 1–5, 6–10 and 11–15; IDM role indices cover 1–57.
 - All eight sample directories exist and contain no distributed sample audio.
 - Local Markdown links and images resolve.
-- The report contains 55 PDF pages.
+- The report contains 57 PDF pages.
 
 ## Author confirmation: 5 November 2026
 
